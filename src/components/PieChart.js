@@ -1,70 +1,72 @@
-import React, { useEffect, useRef } from "react";
-import * as d3 from "d3";
+import React, { Component } from 'react';
+import Highcharts from 'highcharts';
+import '../App.css';
 
-const Pie = props => {
-  const ref = useRef(null);
-  const createPie = d3
-    .pie()
-    .value(d => d.value)
-    .sort(null);
-  const createArc = d3
-    .arc()
-    .innerRadius(props.innerRadius)
-    .outerRadius(props.outerRadius);
-//   const colors = d3.scaleOrdinal(d3.schemeCategory10);
-  const colors = d3.scaleOrdinal(d3.schemeAccent);
-  const format = d3.format(".2f");
+export class LineChart extends Component {
+    // initial creation
+    componentDidMount() {
+        this.createPieChart()
+    }
 
-  useEffect(
-    () => {
-      const data = createPie(props.data);
-      const group = d3.select(ref.current);
-      const groupWithData = group.selectAll("g.arc").data(data);
+    // chart updates
+    componentDidUpdate() {
+        this.createPieChart()
+    }
 
-      groupWithData.exit().remove();
+    formatPieData(data) {
+      let dataPie = data.map(datum => {
+        return {name: datum.group,
+         y: datum.value}
+      });
 
-      const groupWithUpdate = groupWithData
-        .enter()
-        .append("g")
-        .attr("class", "arc");
+      return dataPie
+    }
 
-      const path = groupWithUpdate
-        .append("path")
-        .merge(groupWithData.select("path.arc"));
+    createPieChart = () => {
+        const {size, data} = this.props
+        const dataPie = this.formatPieData(data);
 
-      path
-        .attr("class", "arc")
-        .attr("d", createArc)
-        .attr("fill", (d, i) => colors(i));
+        console.log(dataPie);
+        // Create the chart
+        Highcharts.chart(this.refs.chart, {
+            chart: { type: 'pie' },
+            title: { text: null },
+            credits: {enabled: false},
 
-      const text = groupWithUpdate
-        .append("text")
-        .merge(groupWithData.select("text"));
+            plotOptions: {
+                pie: {
+                    shadow: false,
+                    center: ['50%', '50%']
+                }
+            },
+            tooltip: {
+                valueSuffix: '%'
+            },
+            series: [{
+                type: 'pie',
+                name: 'Trends',
+                data: dataPie,
+                innerSize: '50%',
+                dataLabels: {
+                    formatter: function () {
+                        return this.y > 5 ? this.point.name : null;
+                    },
+                    color: '#ffffff',
+                    distance: -30
+                }
+            }],
+        })
+    }
 
-      text
-        .attr("text-anchor", "middle")
-        .attr("alignment-baseline", "middle")
-        .attr("transform", d => `translate(${createArc.centroid(d)})`)
-        .style("fill", "black")
-        .style("font-size", 15)
-        .text(d => format(d.value));
-    },
-    [props.data]
-  );
+    render() {
+        return (
+            <div className='widget-container flex-50'>
+                <div className='fe-atoms-generic-container'>
+                    <div ref='chart'></div>
+                </div>
+            </div>
+        )
+    }
+}
 
-  return (
-
-    <div className='widget-container flex-50'>
-        <div className='fe-atoms-generic-container'>
-            <svg width={props.size.width} height={props.size.height}>
-            <g
-                ref={ref}
-                transform={`translate(${props.outerRadius} ${props.outerRadius})`}
-            />
-            </svg>
-        </div>
-    </div>
-  );
-};
-
-export default Pie;
+export default LineChart;
