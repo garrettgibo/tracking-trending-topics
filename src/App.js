@@ -17,6 +17,14 @@ const data = [
     {group: 'e', value: 25},
 ]
 
+const timeData = [
+    {date: 'a', value: 12},
+    {date: 'b', value: 31},
+    {date: 'c', value: 22},
+    {date: 'd', value: 17},
+    {date: 'e', value: 25},
+]
+
 class App extends Component {
 
   constructor(props) {
@@ -26,6 +34,7 @@ class App extends Component {
       halfWidth: 1152 / 2 - 24,
       height: 392,
       data,
+      timeData,
     }
   }
   render() {
@@ -42,7 +51,8 @@ class App extends Component {
                       outerRadius={this.state.height/2}
                       innerRadius={(this.state.height)/4}
                       />
-            <LineChart size={this.state}/>
+            <LineChart size={this.state}
+                       data={this.state.timeData}/>
             <MapChart size={this.state}/>
           </div>
         </div>
