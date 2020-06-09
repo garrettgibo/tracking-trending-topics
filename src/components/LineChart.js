@@ -24,7 +24,6 @@ export class LineChart extends Component {
             dataLine.dates.push(element.date);
             dataLine.values.push(element.value);
         });
-        console.log(dataLine)
 
         Highcharts.chart(this.refs.chart, {
             chart: {
@@ -37,7 +36,9 @@ export class LineChart extends Component {
             credits: {enabled: false},
 
             yAxis: {
-                text: 'Adj Close Stock Price',
+                title:{
+                    text: 'Relative Interst',
+                },
                 crosshair: {
                     width: 1,
                     color: 'black',
@@ -46,10 +47,10 @@ export class LineChart extends Component {
 
             xAxis: {
                 categories: dataLine.dates,
-                title: {
-                    enabled: true,
-                    text: 'Date',
-                },
+                // title: {
+                //     enabled: true,
+                //     text: 'Date',
+                // },
                 crosshair: {
                     width: 1,
                     color: 'black',
@@ -84,11 +85,5 @@ export class LineChart extends Component {
         )
     }
 }
-                    // Line Chart
-                    // <svg
-                    //     ref={node => this.node = node}
-                    //     width={this.props.size['width']}
-                    //     height={this.props.size['height']}>
-                    // </svg>
 
 export default LineChart;
