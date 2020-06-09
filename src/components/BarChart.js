@@ -4,10 +4,9 @@ import '../App.css';
 import * as d3 from "d3";
 
 export class BarChart extends Component {
-    constructor(props) {
-        super(props)
-        this.createBarChart = this.createBarChart
-    }
+    // constructor(props) {
+    //     super(props)
+    // }
 
     // initial creation
     componentDidMount() {
@@ -27,8 +26,8 @@ export class BarChart extends Component {
         let {w, h, data} = this.props;
 
         // create padding around chart
-        w = w - margin.left - margin .right;
-        h = h - margin.top - margin .bottom;
+        w = w - margin.left - margin.right;
+        h = h - margin.top - margin.bottom;
 
         const svg = d3
           .select(this.refs.chart)
@@ -90,12 +89,6 @@ export class BarChart extends Component {
     }
 
     render() {
-        const styles = {
-            container: {
-                display: "grid",
-                justifyItems: "center"
-            }
-        };
         return (
             <div className='widget-container flex-50'>
                 <div className='fe-atoms-generic-container'>

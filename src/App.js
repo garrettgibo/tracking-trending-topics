@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 // import * as d3 from "d3";
 
 import './App.css';
+import Header from './components/Header';
+import Picker from './components/Picker';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import LineChart from './components/LineChart';
@@ -30,11 +32,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2 style={{height: '24px', lineHeight:'21px'}}>
-            Tracking Trending Topics
-          </h2>
-        </div>
+        <Header size={this.state}/>
+        <Picker size={this.state}/>
 
         <div className='content-wrap'>
           <div className='widget-container-wrapper layout-wrap layout-row'>

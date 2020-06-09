@@ -6,13 +6,12 @@
   background-color: rgb(66, 133, 244);
   color: white;
   min-height: 47px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  height: 64px;
+  padding: 12px 8px;
   display: flex;
+  margin:0px;
   flex-direction: row;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12);
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.24);
 }
 
 .App-intro {
@@ -22,6 +21,11 @@
 .content-wrap {
   margin: 0 auto;
   max-width: 1152px;
+}
+
+.feature-container {
+  margin: 0 0 24px;
+  position: relative;
 }
 
 .widget-container {
@@ -74,4 +78,34 @@
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
+}
+
+.picker {
+  background-color:white;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12);
+}
+
+.picker-container {
+  font-family: 'Roboto','Heebo',Arial,sans-serif;
+  font-weight: 400;
+  margin: 0 auto;
+  max-width: 1152px;
+  position: relative;
+  height: 64px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+
+#header {
+  background-color: rgb(66, 133, 244);
+  color: white;
+  margin: 0px;
 }
