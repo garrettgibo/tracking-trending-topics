@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-// import * as d3 from "d3";
+import React, { Component, useState, useEffect } from 'react';
+import * as d3 from "d3";
 
 import './App.css';
 import Header from './components/Header';
@@ -19,7 +19,6 @@ const data = [
 
 class App extends Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +37,11 @@ class App extends Component {
         <div className='content-wrap'>
           <div className='widget-container-wrapper layout-wrap layout-row'>
             <BarChart w={this.state.halfWidth} h={this.state.height} data={this.state.data}/>
-            <PieChart size={this.state}/>
+            <PieChart size={this.state}
+                      data={this.state.data}
+                      outerRadius={this.state.height/2}
+                      innerRadius={(this.state.height)/4}
+                      />
             <LineChart size={this.state}/>
             <MapChart size={this.state}/>
           </div>

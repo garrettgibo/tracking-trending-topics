@@ -1,21 +1,70 @@
-import React, { Component } from 'react';
-import '../App.css';
+import React, { useEffect, useRef } from "react";
+import * as d3 from "d3";
 
-export class PieChart extends Component {
-    render() {
-        return (
-            <div className='widget-container flex-50'>
-                <div className='fe-atoms-generic-container'>
-                    Pie Chart
-                    <svg
-                        ref={node => this.node = node}
-                        width={this.props.size['halfWidth']}
-                        height={this.props.size['height']}>
-                    </svg>
-                </div>
-            </div>
-        )
-    }
-}
+const Pie = props => {
+  const ref = useRef(null);
+  const createPie = d3
+    .pie()
+    .value(d => d.value)
+    .sort(null);
+  const createArc = d3
+    .arc()
+    .innerRadius(props.innerRadius)
+    .outerRadius(props.outerRadius);
+//   const colors = d3.scaleOrdinal(d3.schemeCategory10);
+  const colors = d3.scaleOrdinal(d3.schemeAccent);
+  const format = d3.format(".2f");
 
-export default PieChart;
+  useEffect(
+    () => {
+      const data = createPie(props.data);
+      const group = d3.select(ref.current);
+      const groupWithData = group.selectAll("g.arc").data(data);
+
+      groupWithData.exit().remove();
+
+      const groupWithUpdate = groupWithData
+        .enter()
+        .append("g")
+        .attr("class", "arc");
+
+      const path = groupWithUpdate
+        .append("path")
+        .merge(groupWithData.select("path.arc"));
+
+      path
+        .attr("class", "arc")
+        .attr("d", createArc)
+        .attr("fill", (d, i) => colors(i));
+
+      const text = groupWithUpdate
+        .append("text")
+        .merge(groupWithData.select("text"));
+
+      text
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
+        .attr("transform", d => `translate(${createArc.centroid(d)})`)
+        .style("fill", "white")
+        .style("font-size", 10)
+        .text(d => format(d.value));
+    },
+    [props.data]
+  );
+
+  return (
+
+    <div className='widget-container flex-50'>
+        <div className='fe-atoms-generic-container'>
+            <svg width={props.size.width} height={props.size.height}>
+            <g
+                ref={ref}
+                transform={`translate(${props.outerRadius} ${props.outerRadius})`}
+            />
+            </svg>
+        </div>
+    </div>
+  );
+};
+
+export default Pie;
