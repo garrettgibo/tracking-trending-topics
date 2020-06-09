@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import Highcharts from 'highcharts';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeAccent } from 'd3-scale-chromatic';
 import '../App.css';
-// import { select } from 'd3-selection'
-import * as d3 from "d3";
+
+const color = scaleOrdinal(schemeAccent);
+let colors = {};
 
 export class BarChart extends Component {
     // constructor(props) {
@@ -18,74 +22,71 @@ export class BarChart extends Component {
         this.createBarChart()
     }
 
+
+    formatData(data) {
+        let formatted = {
+            groups: [],
+            values: [],
+        };
+        data.forEach((datum) => {
+            formatted.groups.push(datum.group)
+            colors[datum.group] = color(datum.group)
+            formatted.values.push({
+                y: datum.value,
+                color: colors[datum.group]
+            })
+        });
+
+        return formatted
+    }
+
     createBarChart = () => {
-        // global chart parameters
-        const color = d3.scaleOrdinal(d3.schemeAccent);
-        const margin = {top: 30, right: 30, bottom: 30, left: 60}
+        const {data} = this.props
+        const barData = this.formatData(data);
+        console.log(barData);
+        console.log(colors)
 
-        let {w, h, data} = this.props;
-
-        // create padding around chart
-        w = w - margin.left - margin.right;
-        h = h - margin.top - margin.bottom;
-
-        const svg = d3
-          .select(this.refs.chart)
-          .append("svg")
-          .attr("width", w + margin.left + margin.right)
-          .attr("height", h + margin.top + margin.bottom)
-          .attr("class", "bar");
-
-        // Initialize the X axis
-        const x = d3.scaleBand()
-            .range([0, w])
-            .padding(0.3)
-        const xAxis = svg.append("g")
-            .attr("transform", `translate(${margin.left}, ${h + margin.bottom})`)
-            .style('color', 'rgb(158, 158, 158)')
-
-        // Initialize the Y axis
-        const y = d3.scaleLinear()
-            .range([ h, 0]);
-        const yAxis = svg.append("g")
-            .attr("transform", `translate(${margin.left}, ${ margin.bottom})`)
-            .attr("class", "myYaxis")
-            .style('color', 'rgb(158, 158, 158)')
-
-        // Create the X axis
-        x.domain(data.map( (d) => d.group ))
-        xAxis.call(d3.axisBottom(x))
-
-        // Create the Y axis
-        y.domain([0, d3.max(data, (d) => d.value ) ]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
-
-        // Create bars
-        svg
-          .selectAll("rect")
-          .data(data)
-          .enter()
-          .append("rect")
-          .attr("fill", d => color(d.group))
-          .attr("class", "sBar")
-          .attr("x", d => x(d.group))
-          .attr("y", d => y(d.value))
-          .attr("width",x.bandwidth())
-          .attr("height", d => h - y(d.value))
-          .attr("transform", `translate(${margin.left}, ${margin.bottom})`)
-          .append("title")
-          .text(d => `${d.group} - ${d.value}`);
-
-        // svg
-        //   .selectAll("text")
-        //   .data(data)
-        //   .enter()
-        //   .append("text")
-        //   .style("font-size", 18)
-        //   .attr("fill", "red")
-        //   .attr("x", (d, i) => i * 60)
-        //   .attr("y", (d, i) => h - 7 * d.value - 3)
-        //   .text(d => d.group);
+        Highcharts.chart(this.refs.chart, {
+            chart: {
+                type: 'column'
+            },
+            title: { text: null },
+            legend: { enabled: false, },
+            credits: {enabled: false},
+            xAxis: {
+                categories: barData.groups,
+                crosshair: true,
+                title: {
+                    enabled: false,
+                }
+            },
+            yAxis: {
+                enabled: false,
+                min: 0,
+                title: {
+                    text: 'Relative Interest'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    colorByPoint: true,
+                }
+            },
+            series: [{
+                name: 'Trends',
+                data: barData.values
+            },]
+        });
     }
 
     render() {
