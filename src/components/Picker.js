@@ -8,7 +8,7 @@ export class Picker extends Component {
     render() {
         return (
             <div className='picker feature-container'>
-                <div className='picker-container flex-100 layout-row'>
+                <div className='picker-container flex-100 layout-left'>
                     <div>
                         <DatePicker />
                     </div>

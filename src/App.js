@@ -4,6 +4,7 @@ import './App.css';
 // Components
 import Header from './components/Header';
 import Picker from './components/Picker';
+import Legend from './components/Legend';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import LineChart from './components/LineChart';
@@ -22,8 +23,9 @@ const singleDayTrendMapData = mapData[barDates[day]][singleDayBarData.queries[da
 
 let trend = singleDayBarData.queries[day]
 
-class App extends Component {
+console.log(singleDayBarData)
 
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,8 +37,23 @@ class App extends Component {
       lineData: singleDayLineData,
       mapData: singleDayTrendMapData,
       mapTrend: trend,
+      trends: singleDayBarData.queries
     }
   }
+  componentDidMount() {
+    let trends = this.state.barData.queries;
+    this.changeTrends(trends);
+  }
+
+  componentDidUpdate() {
+    let trends = this.state.barData.queries;
+    this.changeTrends(trends);
+  }
+
+  changeTrends = (trends) => {
+    this.state.trends = trends;
+  }
+
   render() {
     return (
       <div className="App">
@@ -45,6 +62,7 @@ class App extends Component {
 
         <div className='content-wrap'>
           <div className='widget-container-wrapper layout-wrap layout-row'>
+            <Legend trends={this.state.trends}/>
             <BarChart data={this.state.barData} />
             <PieChart data={this.state.pieData} />
             <LineChart data={this.state.lineData} />

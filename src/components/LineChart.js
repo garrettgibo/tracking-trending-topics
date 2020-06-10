@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Highcharts from 'highcharts';
-// import exporting from 'highcharts/exporting';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeAccent } from 'd3-scale-chromatic';
+import ChartTitle from './ChartTitle';
 import '../App.css';
 
 const color = scaleOrdinal(schemeAccent);
@@ -21,7 +21,6 @@ export class LineChart extends Component {
     }
 
     formatData(data) {
-        console.log(data.dates[0])
         let formatted = {
             dates: data.dates.map( d => new Date(d * 1000)),
             values: data.values.map( trend => {
@@ -45,7 +44,6 @@ export class LineChart extends Component {
     createLineChart = () => {
         const {data} = this.props
         const dataLine = this.formatData(data);
-        console.log(dataLine.values)
 
         Highcharts.chart(this.refs.chart, {
             chart: {
@@ -78,19 +76,14 @@ export class LineChart extends Component {
 
             tooltip: {
                 formatter: function(){
-                    return `$${this.y.toFixed(2)}`;
+                    return `${this.y.toFixed(2)}`;
                 },
             },
 
             series: dataLine.values,
-            // series: [{
-            //     name: 'stocks',
-            //     data: dataLine.values,
-            // }],
-
             plotOptions: {
-                color: 'rgba(41, 163, 204, 0.01)',
-                lineColor: 'rgba(41, 163, 204, 0.5)',
+                // color: 'rgba(41, 163, 204, 0.01)',
+                // lineColor: 'rgba(41, 163, 204, 0.5)',
                 series: {
                     marker: {
                         enabled: false,
@@ -104,6 +97,7 @@ export class LineChart extends Component {
         return (
             <div className='widget-container flex-100'>
                 <div className='fe-atoms-generic-container'>
+                    <ChartTitle title={'testing'} />
                     <div ref='chart'></div>
                 </div>
             </div>

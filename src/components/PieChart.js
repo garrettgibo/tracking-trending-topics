@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Highcharts from 'highcharts';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeAccent } from 'd3-scale-chromatic';
+import ChartTitle from './ChartTitle';
 import '../App.css';
 
 const color = scaleOrdinal(schemeAccent);
@@ -20,11 +21,14 @@ export class LineChart extends Component {
 
     formatData(data) {
         let formatted = []
+        let total = data["values"].reduce( (item, next) => item + next)
         data["queries"].forEach( (item, index) => {
             colors[item] = color(item)
+            // normalize values into percents
+            let percent = parseFloat((data["values"][index] / total * 100).toFixed(2))
             formatted.push({
                 name: item,
-                y: data["values"][index],
+                y: percent,
                 color: colors[item]
             })
         });
@@ -34,7 +38,6 @@ export class LineChart extends Component {
     createPieChart = () => {
         const {data} = this.props
         const dataPie = this.formatData(data);
-        console.log(dataPie)
 
         // Create the chart
         Highcharts.chart(this.refs.chart, {
@@ -45,8 +48,14 @@ export class LineChart extends Component {
             plotOptions: {
                 pie: {
                     shadow: false,
-                    center: ['50%', '50%']
-                }
+                    center: ['50%', '50%'],
+                    // allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                    }
+                },
+
             },
             tooltip: {
                 valueSuffix: '%'
@@ -56,27 +65,15 @@ export class LineChart extends Component {
                 name: 'Trends',
                 data: dataPie,
                 innerSize: '50%',
-                dataLabels: {
-                    formatter: function () {
-                        return this.y > 5 ? this.point.name : null;
-                    },
-                    // color: 'black',
-                    distance: -30,
-                    style: {
-                        color: 'black',
-                        fontSize: '20px',
-                        fontWeight: 'normal',
-                        textOutline: 'black'
-                    }
-                }
             }],
         })
     }
 
     render() {
         return (
-            <div className='widget-container flex-50'>
+            <div className='widget-container flex-40'>
                 <div className='fe-atoms-generic-container'>
+                    <ChartTitle title={'testing'} />
                     <div ref='chart'></div>
                 </div>
             </div>

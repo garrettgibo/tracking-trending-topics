@@ -4,6 +4,7 @@ import { scaleOrdinal } from 'd3-scale';
 import { schemeAccent } from 'd3-scale-chromatic';
 import Highcharts from 'highcharts/highmaps';
 import './highchart/us-map.js'
+import ChartTitle from './ChartTitle';
 import '../App.css';
 
 const color = scaleOrdinal(schemeAccent);
@@ -76,6 +77,7 @@ export class MapChart extends Component {
         return (
             <div className='widget-container flex-100'>
                 <div className='fe-atoms-generic-container'>
+                    <ChartTitle title={'testing'} />
                     <div ref='chart'></div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Highcharts from 'highcharts';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeAccent } from 'd3-scale-chromatic';
+import ChartTitle from './ChartTitle';
 import '../App.css';
 
 const color = scaleOrdinal(schemeAccent);
@@ -21,24 +22,6 @@ export class BarChart extends Component {
     componentDidUpdate() {
         this.createBarChart()
     }
-
-
-    // formatData(data) {
-    //     let formatted = {
-    //         groups: [],
-    //         values: [],
-    //     };
-    //     data.forEach((datum) => {
-    //         formatted.groups.push(datum.group)
-    //         colors[datum.group] = color(datum.group)
-    //         formatted.values.push({
-    //             y: datum.value,
-    //             color: colors[datum.group]
-    //         })
-    //     });
-
-    //     return formatted
-    // }
 
     formatData(data) {
         let formatted = {
@@ -83,8 +66,9 @@ export class BarChart extends Component {
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                pointFormat: `<tr><td style=\\"color:{series.color};padding:0\\">
+                            {series.name}: </td><td style=\\"padding:0\\">
+                            <b>{point.y}</b></td></tr>`,
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -105,8 +89,9 @@ export class BarChart extends Component {
 
     render() {
         return (
-            <div className='widget-container flex-50'>
+            <div className='widget-container flex-60'>
                 <div className='fe-atoms-generic-container'>
+                    <ChartTitle title={'testing'} />
                     <div ref='chart'></div>
                 </div>
             </div>
