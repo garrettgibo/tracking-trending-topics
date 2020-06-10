@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import Highcharts from 'highcharts';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeAccent } from 'd3-scale-chromatic';
 import '../App.css';
+
+const color = scaleOrdinal(schemeAccent);
+let colors = {};
 
 export class LineChart extends Component {
     // initial creation
@@ -13,20 +18,24 @@ export class LineChart extends Component {
         this.createPieChart()
     }
 
-    formatPieData(data) {
-      let dataPie = data.map(datum => {
-        return {name: datum.group,
-         y: datum.value}
-      });
-
-      return dataPie
+    formatData(data) {
+        let formatted = []
+        data["queries"].forEach( (item, index) => {
+            colors[item] = color(item)
+            formatted.push({
+                name: item,
+                y: data["values"][index],
+                color: colors[item]
+            })
+        });
+        return formatted;
     }
 
     createPieChart = () => {
-        const {size, data} = this.props
-        const dataPie = this.formatPieData(data);
+        const {data} = this.props
+        const dataPie = this.formatData(data);
+        console.log(dataPie)
 
-        console.log(dataPie);
         // Create the chart
         Highcharts.chart(this.refs.chart, {
             chart: { type: 'pie' },
@@ -51,8 +60,14 @@ export class LineChart extends Component {
                     formatter: function () {
                         return this.y > 5 ? this.point.name : null;
                     },
-                    color: '#ffffff',
-                    distance: -30
+                    // color: 'black',
+                    distance: -30,
+                    style: {
+                        color: 'black',
+                        fontSize: '20px',
+                        fontWeight: 'normal',
+                        textOutline: 'black'
+                    }
                 }
             }],
         })

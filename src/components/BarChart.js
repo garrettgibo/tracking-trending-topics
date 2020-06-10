@@ -23,28 +23,42 @@ export class BarChart extends Component {
     }
 
 
+    // formatData(data) {
+    //     let formatted = {
+    //         groups: [],
+    //         values: [],
+    //     };
+    //     data.forEach((datum) => {
+    //         formatted.groups.push(datum.group)
+    //         colors[datum.group] = color(datum.group)
+    //         formatted.values.push({
+    //             y: datum.value,
+    //             color: colors[datum.group]
+    //         })
+    //     });
+
+    //     return formatted
+    // }
+
     formatData(data) {
         let formatted = {
             groups: [],
             values: [],
         };
-        data.forEach((datum) => {
-            formatted.groups.push(datum.group)
-            colors[datum.group] = color(datum.group)
+        data["queries"].forEach( (item, index) => {
+            formatted.groups.push(item);
+            colors[item] = color(item)
             formatted.values.push({
-                y: datum.value,
-                color: colors[datum.group]
+                y: data["values"][index],
+                color: colors[item],
             })
         });
-
-        return formatted
+        return formatted;
     }
 
     createBarChart = () => {
-        const {data} = this.props
+        const { data } = this.props
         const barData = this.formatData(data);
-        console.log(barData);
-        console.log(colors)
 
         Highcharts.chart(this.refs.chart, {
             chart: {
