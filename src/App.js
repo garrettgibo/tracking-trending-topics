@@ -10,9 +10,13 @@ import LineChart from './components/LineChart';
 import MapChart from './components/MapChart';
 // Data
 import { barData } from './data/barChartData';
+import { lineData } from './data/lineChartData';
 
 const barDates = Object.keys(barData)
-const singleDayBarData = barData[barDates[0]]
+const lineDates = Object.keys(lineData)
+const singleDayBarData = barData[barDates[15]]
+const singleDayLineData = lineData[lineDates[15]]
+console.log(singleDayLineData)
 
 const timeData = [
     {date: 'a', value: 12},
@@ -41,6 +45,7 @@ class App extends Component {
       // height: 392,
       barData: singleDayBarData,
       pieData: singleDayBarData,
+      lineData: singleDayLineData,
       timeData,
       mapData,
     }
@@ -55,7 +60,7 @@ class App extends Component {
           <div className='widget-container-wrapper layout-wrap layout-row'>
             <BarChart data={this.state.barData} />
             <PieChart data={this.state.pieData} />
-            <LineChart data={this.state.timeData} />
+            <LineChart data={this.state.lineData} />
             <MapChart data={this.state.mapData} />
           </div>
         </div>

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Highcharts from 'highcharts';
+// import exporting from 'highcharts/exporting';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeAccent } from 'd3-scale-chromatic';
 import '../App.css';
+
+const color = scaleOrdinal(schemeAccent);
+let colors = {};
 
 export class LineChart extends Component {
 
@@ -14,21 +20,37 @@ export class LineChart extends Component {
         this.createLineChart()
     }
 
-    createLineChart = () => {
-        let {size, data} = this.props
-        let dataLine = {
-            dates: [],
-            values: [],
+    formatData(data) {
+        console.log(data.dates[0])
+        let formatted = {
+            dates: data.dates.map( d => new Date(d * 1000)),
+            values: data.values.map( trend => {
+                colors[trend.name] = color(trend.name)
+                let entry = {
+                    color: colors[trend.name],
+                    name: trend.name,
+                    data: trend.values.map( (val, ind) =>{
+                        return [
+                            data.dates[ind] * 1000,
+                            val
+                        ]
+                    }),
+                }
+                return entry
+            })
         }
-        data.forEach((element,index) => {
-            dataLine.dates.push(element.date);
-            dataLine.values.push(element.value);
-        });
+        return formatted
+    }
+
+    createLineChart = () => {
+        const {data} = this.props
+        const dataLine = this.formatData(data);
+        console.log(dataLine.values)
 
         Highcharts.chart(this.refs.chart, {
             chart: {
-            type: 'area',
-            zoomType: 'xy',
+                type: 'spline',
+                zoomType: 'xy',
             },
 
             title: {text: null},
@@ -46,14 +68,11 @@ export class LineChart extends Component {
             },
 
             xAxis: {
-                categories: dataLine.dates,
-                // title: {
-                //     enabled: true,
-                //     text: 'Date',
-                // },
+                type:'datetime',
                 crosshair: {
                     width: 1,
-                    color: 'black',
+                    color: 'gray',
+                    // snap: false,
                 }
             },
 
@@ -63,14 +82,20 @@ export class LineChart extends Component {
                 },
             },
 
-            series: [{
-                name: 'stocks',
-                data: dataLine.values,
-            }],
+            series: dataLine.values,
+            // series: [{
+            //     name: 'stocks',
+            //     data: dataLine.values,
+            // }],
 
             plotOptions: {
                 color: 'rgba(41, 163, 204, 0.01)',
                 lineColor: 'rgba(41, 163, 204, 0.5)',
+                series: {
+                    marker: {
+                        enabled: false,
+                    }
+                },
             }
         });
     }
