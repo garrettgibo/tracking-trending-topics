@@ -11,30 +11,17 @@ import MapChart from './components/MapChart';
 // Data
 import { barData } from './data/barChartData';
 import { lineData } from './data/lineChartData';
+import { mapData } from './data/mapChartData';
 
 const barDates = Object.keys(barData)
 const lineDates = Object.keys(lineData)
-const singleDayBarData = barData[barDates[15]]
-const singleDayLineData = lineData[lineDates[15]]
-console.log(singleDayLineData)
+let day = 0
+const singleDayBarData = barData[barDates[day]]
+const singleDayLineData = lineData[lineDates[day]]
+const singleDayTrendMapData = mapData[barDates[day]][singleDayBarData.queries[day]].values.data[0]
 
-const timeData = [
-    {date: 'a', value: 12},
-    {date: 'b', value: 31},
-    {date: 'c', value: 22},
-    {date: 'd', value: 17},
-    {date: 'e', value: 25},
-]
+let trend = singleDayBarData.queries[day]
 
-const mapData = [
-  ['eu', 0],
-  ['oc', 0],
-  ['af', 0],
-  ['as', 0],
-  ['na', 0],
-  ['sa', 0],
-  ['an', 0]
-];
 class App extends Component {
 
   constructor(props) {
@@ -46,8 +33,8 @@ class App extends Component {
       barData: singleDayBarData,
       pieData: singleDayBarData,
       lineData: singleDayLineData,
-      timeData,
-      mapData,
+      mapData: singleDayTrendMapData,
+      mapTrend: trend,
     }
   }
   render() {
@@ -61,7 +48,7 @@ class App extends Component {
             <BarChart data={this.state.barData} />
             <PieChart data={this.state.pieData} />
             <LineChart data={this.state.lineData} />
-            <MapChart data={this.state.mapData} />
+            <MapChart data={this.state.mapData} trend={this.state.trend}/>
           </div>
         </div>
       </div>
