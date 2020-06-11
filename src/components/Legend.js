@@ -5,7 +5,6 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import '../App.css';
 
 const color = scaleOrdinal(schemeCategory10);
-let colors = {};
 
 export class Legend extends Component {
     constructor(props) {
@@ -15,6 +14,8 @@ export class Legend extends Component {
             currentYear: null,
             trends: this.props.trends,
         }
+        this.colors = {}
+        this.state.trends.forEach((trend) => this.colors[trend] = color(trend))
     }
     // initial creation
     componentDidMount() {
@@ -33,20 +34,19 @@ export class Legend extends Component {
 
     changeTrends = (trends) => {
         this.setState({
-            // years: this.props.year,
-            // currentYear: null,
             trends: trends,
         })
+        trends.forEach((trend) => this.colors[trend] = color(trend))
     }
 
     createLegend = () => {
-        let legend = this.state.trends.map(element => {
+        let legend = this.state.trends.map(trend => {
             return (
                 <div className='legend-element flex-12'>
                     <svg width="40" height="40" style={{margin: 'auto'}}>
-                        <circle cx="20" cy="20" r="7" fill={color(element)} />
+                        <circle cx="20" cy="20" r="7" fill={this.colors[trend]} />
                     </svg>
-                    <p style={{margin: 'auto auto auto 0'}}> {element} </p>
+                    <p style={{margin: 'auto auto auto 0'}}> {trend} </p>
                 </div>
             )
         });
