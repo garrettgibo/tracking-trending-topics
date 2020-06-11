@@ -57,6 +57,9 @@ export class MapChart extends Component {
 
         console.log(m);
         Highcharts.mapChart(this.refs.chart, {
+            title: {text: null},
+            legend: { enabled: false, },
+            credits: {enabled: false},
             colorAxis: {
                 dataClasses: [{
                     from: -1,

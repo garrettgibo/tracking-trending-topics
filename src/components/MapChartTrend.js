@@ -55,6 +55,9 @@ export class MapChart extends Component {
         const m = this.formatData(data, trendIndex);
 
         Highcharts.mapChart(this.refs.chart, {
+            title: {text: null},
+            legend: { enabled: false, },
+            credits: {enabled: false},
             colorAxis: {
                 from: 0,
                 to: 100,
