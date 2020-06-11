@@ -10,14 +10,14 @@ import PieChart from './components/PieChart';
 import LineChart from './components/LineChart';
 import MapChart from './components/MapChart';
 // Data
-import { barData } from './data/barChartData';
+import { yearData } from './data/yearData';
 // import { lineData } from './data/lineChartData';
-import { mapData } from './data/mapChartData';
+// import { mapData } from './data/mapChartData';
 
-const barYears = Object.keys(barData)
+const years = Object.keys(yearData)
 // const lineDates = Object.keys(lineData)
-let day = 0
-const singleDayBarData = barData[barYears[day]]
+let year = 0
+const yearsData = yearData[years[year]]
 // const singleDayLineData = lineData[lineDates[day]]
 // const singleDayTrendMapData = mapData[barDates[day]][singleDayBarData.queries[day]].values.data[0]
 
@@ -32,9 +32,9 @@ class App extends Component {
       // width: 1152 - 24,
       // halfWidth: 1152 / 2 - 24,
       // height: 392,
-      barData: singleDayBarData,
-      pieData: singleDayBarData,
-      lineData: singleDayBarData,
+      barData: yearsData,
+      pieData: yearsData,
+      lineData: yearsData,
       // mapData: singleDayTrendMapData,
       // mapTrend: trend,
       // trends: singleDayBarData.queries
