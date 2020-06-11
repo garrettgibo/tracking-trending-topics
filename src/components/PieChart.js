@@ -35,7 +35,6 @@ export class LineChart extends Component {
 
     formatData(data) {
         let formatted = []
-        // let total = data.values.reduce( (item, next) => item.max + next.max)
         let total = 0;
         let totals = {}
         data.values.forEach(item => {
@@ -56,7 +55,6 @@ export class LineChart extends Component {
     }
 
     createPieChart = () => {
-        // const { data, year} = this.props
         const dataPie = this.formatData(this.state.data[this.state.year]);
 
         // Create the chart
@@ -92,7 +90,7 @@ export class LineChart extends Component {
         return (
             <div className='widget-container flex-40'>
                 <div className='fe-atoms-generic-container'>
-                    <ChartTitle title={'testing'} />
+                    <ChartTitle title={`Proportional Relative Interest`} />
                     <div ref='chart'></div>
                 </div>
             </div>

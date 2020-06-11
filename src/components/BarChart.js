@@ -35,7 +35,6 @@ export class BarChart extends Component {
     }
 
     formatData(data) {
-        console.log(data);
         let formatted = {
             groups: [],
             values: [],
@@ -52,7 +51,6 @@ export class BarChart extends Component {
     }
 
     createBarChart = () => {
-        console.log(this.state.year)
         const barData = this.formatData(this.state.data[this.state.year]);
 
         Highcharts.chart(this.refs.chart, {
@@ -103,7 +101,7 @@ export class BarChart extends Component {
         return (
             <div className='widget-container flex-60'>
                 <div className='fe-atoms-generic-container'>
-                    <ChartTitle title={'testing'} />
+                    <ChartTitle title={`Peak Relative Interests`} />
                     <div ref='chart'></div>
                 </div>
             </div>

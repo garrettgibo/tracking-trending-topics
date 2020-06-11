@@ -95,8 +95,6 @@ export class LineChart extends Component {
 
             series: dataLine.values,
             plotOptions: {
-                // color: 'rgba(41, 163, 204, 0.01)',
-                // lineColor: 'rgba(41, 163, 204, 0.5)',
                 series: {
                     marker: {
                         enabled: false,
@@ -110,7 +108,7 @@ export class LineChart extends Component {
         return (
             <div className='widget-container flex-100'>
                 <div className='fe-atoms-generic-container'>
-                    <ChartTitle title={'testing'} />
+                    <ChartTitle title={`Interest Over Time`} />
                     <div ref='chart'></div>
                 </div>
             </div>

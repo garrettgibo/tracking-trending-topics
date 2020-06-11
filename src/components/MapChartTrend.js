@@ -33,8 +33,8 @@ export class MapChart extends Component {
 
     changeYear = (year) => {
         this.setState({
-            // data: this.props.data,
-            // trendIndex: this.props.trendIndex,
+            data: this.props.data,
+            trendIndex: this.props.trendIndex,
             year,
         })
     }
@@ -67,7 +67,7 @@ export class MapChart extends Component {
     }
 
     createMapChart = () => {
-        // const { data, trendIndex} = this.props;
+
         const m = this.formatData(this.state.data[this.state.year], this.state.trendIndex);
 
         Highcharts.mapChart(this.refs.chart, {
@@ -85,6 +85,7 @@ export class MapChart extends Component {
                 mapData: Highcharts.maps['countries/us/us-all'],
                 data: m.values,
                 joinBy: ['name', 'name'],
+                name: 'Relative Interest',
                 borderColor: '#EEE',
             }]
         });
@@ -94,7 +95,8 @@ export class MapChart extends Component {
         return (
             <div className='widget-container flex-50'>
                 <div className='fe-atoms-generic-container'>
-                    <ChartTitle title={'testing'} />
+                    <ChartTitle title={`Relative Interest for
+                        ${this.state.data[this.state.year].queries[this.state.trendIndex]}`} />
                     <div ref='chart'></div>
                 </div>
             </div>
