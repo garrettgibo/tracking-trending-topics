@@ -5,7 +5,7 @@ import '../App.css';
 export class Header extends Component {
     render() {
         return (
-            <Navbar sticky="top" id='header'>
+            <Navbar  id='header'>
                 <div className='header flex-100'>
                     <Navbar.Text bsPrefix='white'>Tracking Trending Topics</Navbar.Text>
                     <Navbar.Collapse className="justify-content-end">
