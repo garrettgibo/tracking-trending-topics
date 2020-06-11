@@ -42,7 +42,7 @@ export class Legend extends Component {
     createLegend = () => {
         let legend = this.state.trends.map(trend => {
             return (
-                <div className='legend-element flex-12'>
+                <div className='legend-element flex-12' key={trend}>
                     <svg width="40" height="40" style={{margin: 'auto'}}>
                         <circle cx="20" cy="20" r="7" fill={this.colors[trend]} />
                     </svg>

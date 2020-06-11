@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 // Colors
-import chroma from 'chroma-js';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 // Maps
 import Highcharts from 'highcharts/highmaps';
-import ChartTitle from './ChartTitle';
+import './highchart/us-map.js'
 // Style
+import ChartTitle from './ChartTitle';
 import '../App.css';
 
 const color = scaleOrdinal(schemeCategory10);
@@ -47,18 +47,12 @@ export class MapChart extends Component {
                 return query
             }),
             values: data.values[trendIndex].map( p => {
-                let maxTrendInd = p.maxValueIndex;
-                let trend = data.queries[maxTrendInd]
-
-                let f = chroma.scale(['white', colors[trend]]);
-
                 // define actual entry
                 let state = {
                     name: p.geoName,
                     code: p.geoCode.slice(3,), // get only state initials
                     value: p.value[0],
                 };
-                // let state = [p.geoCode, ...p.value]
                 return state
             })
         }
@@ -77,7 +71,7 @@ export class MapChart extends Component {
             colorAxis: {
                 from: 0,
                 to: 100,
-                type: 'logarithmic',
+                // type: 'logarithmic',
                 minColor: '#f7f7f7',
                 maxColor: colors[m.queries[this.state.trendIndex]],
             },

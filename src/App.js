@@ -8,20 +8,14 @@ import Legend from './components/Legend';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import LineChart from './components/LineChart';
-import MapChart from './components/MapChart';
 import MapChartTrend from './components/MapChartTrend';
 // Data
 import { yearData } from './data/yearData';
-import { mapData } from './data/mapData';
 import { mapDataTrend } from './data/mapDataSingle';
 
 const years = Object.keys(yearData)
 let year = 0;
 const yearsData = yearData[years[year]]
-// const mapsData = mapData[years[year]]
-// const mapsDataTrend = mapDataTrend[years[year]]
-
-// console.log(yearsData)
 const trends = yearsData.values.map( trend => trend.name );
 
 class App extends Component {
@@ -46,11 +40,10 @@ class App extends Component {
       years,
       trends,
       currentYear: years[0],
-      barData: yearData, //[years[year]],
-      pieData: yearData, //[years[year]],
-      lineData: yearData, //[years[year]],
-      // mapData: mapData[years[year]],
-      mapDataTrend: mapDataTrend, //[years[year]],
+      barData: yearData,
+      pieData: yearData,
+      lineData: yearData,
+      mapDataTrend: mapDataTrend,
     }
   }
 
