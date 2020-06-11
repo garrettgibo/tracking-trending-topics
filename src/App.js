@@ -16,7 +16,7 @@ import { mapData } from './data/mapData';
 import { mapDataTrend } from './data/mapDataSingle';
 
 const years = Object.keys(yearData)
-let year = 4;
+let year = 0;
 const yearsData = yearData[years[year]]
 // const mapsData = mapData[years[year]]
 // const mapsDataTrend = mapDataTrend[years[year]]
@@ -29,9 +29,19 @@ class App extends Component {
     super(props);
     this.barChart = React.createRef();
     this.lineChart = React.createRef();
+
     this.pieChart = React.createRef();
-    this.mapChart = React.createRef();
+    // maps
+    this.mapChart1 = React.createRef();
+    this.mapChart2 = React.createRef();
+    this.mapChart3 = React.createRef();
+    this.mapChart4 = React.createRef();
+    this.mapChart5 = React.createRef();
+
+    // legend
     this.legend = React.createRef();
+
+    // State
     this.state = {
       years,
       trends,
@@ -51,10 +61,15 @@ class App extends Component {
     this.barChart.current.changeYear(newYear);
     this.lineChart.current.changeYear(newYear);
     this.pieChart.current.changeYear(newYear);
-    this.mapChart.current.changeYear(newYear);
+    // maps
+    this.mapChart1.current.changeYear(newYear);
+    this.mapChart2.current.changeYear(newYear);
+    this.mapChart3.current.changeYear(newYear);
+    this.mapChart4.current.changeYear(newYear);
+    this.mapChart5.current.changeYear(newYear);
+
     let trends = yearData[newYear].values.map(entry => entry.name);
-    console.log(trends);
-    this.legend.current.changeTrends(trends);
+    this.legend.current.changeTrends(trends, newYear);
   }
 
   render() {
@@ -81,19 +96,19 @@ class App extends Component {
             <MapChartTrend data={this.state.mapDataTrend}
                       trendIndex={0}
                       year={this.state.currentYear}
-                      ref={this.mapChart}/>
+                      ref={this.mapChart1}/>
             <MapChartTrend data={this.state.mapDataTrend} trendIndex={1}
                       year={this.state.currentYear}
-                      ref={this.mapChart}/>
+                      ref={this.mapChart2}/>
             <MapChartTrend data={this.state.mapDataTrend} trendIndex={2} width={33}
                       year={this.state.currentYear}
-                      ref={this.mapChart}/>
+                      ref={this.mapChart3}/>
             <MapChartTrend data={this.state.mapDataTrend} trendIndex={3} width={33}
                       year={this.state.currentYear}
-                      ref={this.mapChart}/>
+                      ref={this.mapChart4}/>
             <MapChartTrend data={this.state.mapDataTrend} trendIndex={4} width={33}
                       year={this.state.currentYear}
-                      ref={this.mapChart}/>
+                      ref={this.mapChart5}/>
           </div>
         </div>
       </div>
