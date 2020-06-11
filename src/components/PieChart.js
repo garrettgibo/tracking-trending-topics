@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Highcharts from 'highcharts';
 import { scaleOrdinal } from 'd3-scale';
-import { schemeAccent } from 'd3-scale-chromatic';
+import { schemeCategory10 } from 'd3-scale-chromatic';
 import ChartTitle from './ChartTitle';
 import '../App.css';
 
-const color = scaleOrdinal(schemeAccent);
+const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class LineChart extends Component {
