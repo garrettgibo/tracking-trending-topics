@@ -1,68 +1,50 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Tracking Trending Topics
 
-## Available Scripts
+A subtle expansion up Google [Trends](https://trends.google.com/trends/?geo=US)
+to get a better understanding of what is truly *trending*
 
-In the project directory, you can run:
+## Website
 
-### `npm start`
+This is meant to be explored and analyzed to get your own interpretation of the
+data at its webstie:[https://garrettgibo.github.io/tracking-trending-trends/](https://garrettgibo.github.io/tracking-trending-trends)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## The DATA
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Getting data from Google Trends is very much a pain. There are two libraries that
+can be used to interface with it: [pytrends](https://github.com/GeneralMills/pytrends)
+and [google-trends-api](https://www.npmjs.com/package/google-trends-api). Neither of
+them work great, but together the fill in the shortcomings of each other. Google
+probably doesn't want you to actually make requests for their data, so it is
+very important to not make too many request; otherwise, you will get locked out
+for a period of time.
 
-### `npm test`
+### Querying Google Trends
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The data I have gathered is a collection of the top trending topics from the years
+2016-now(June 2020). I have also collected geo data for the US that shows the
+trending data for each year with respect to the states where searches came from.
 
-### `npm run build`
+My js scripts to query Google Trends are in the `scripts` folder. The google-trends-api
+resolves around Promises, so in order to make successive requests, I designed my
+query to recursively call itself after successfully gathering and cleaning data.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## What to Do
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+It's pretty straightforward, there is data from 2016 - now, so it is encouraged to
+explore and make your own conclusions. Some of the top trends are surprising, but
+context explains it all.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How it was Made
 
-### `npm run eject`
+My goal was to emulate the look and feel of Google Trends, while making the
+necessary expansions. To accomplish this site itself was built using react. I
+started out making the charts in d3, but I realized that I have nothing to prove
+with it, so I switched to highcharts for everything.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## TODO
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Add commentary for charts to make presentation of data more guided
+- Allow for finer tuning of time periods
+- Expand trend comparison to worldwide searches
+- Acquire data all the way back to start (2004)
+- Set up backend server to get realtime updates for trending topics
