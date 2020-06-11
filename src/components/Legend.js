@@ -11,7 +11,7 @@ export class Legend extends Component {
         super(props);
         this.state = {
             years: this.props.years,
-            currentYear: null,
+            currentYear: this.props.years[0],
             trends: this.props.trends,
         }
         this.colors = {}
@@ -29,12 +29,12 @@ export class Legend extends Component {
 
     btnClick = (year) => {
         this.setState({currentYear: year})
-        console.log(this.state)
     }
 
-    changeTrends = (trends) => {
+    changeTrends = (trends, year) => {
         this.setState({
             trends: trends,
+            currentYear: year,
         })
         trends.forEach((trend) => this.colors[trend] = color(trend))
     }
@@ -55,7 +55,7 @@ export class Legend extends Component {
                 <div className="header flex-100">
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <DropdownButton title="Year" id="basic-nav-dropdown">
+                        <DropdownButton variant='light' title={this.state.currentYear} id="basic-nav-dropdown">
                             <Dropdown.Item as="button"
                                 onClick={() => this.props.view(this.state.years[0]) }>
                                 {this.state.years[0]}</Dropdown.Item>
