@@ -21,13 +21,15 @@ export class LineChart extends Component {
 
     formatData(data) {
         let formatted = []
-        let total = data["values"].reduce( (item, next) => item + next)
-        data["queries"].forEach( (item, index) => {
-            colors[item] = color(item)
+        // let total = data.values.reduce( (item, next) => item.max + next.max)
+        let total = 0;
+        data.values.forEach(item => total = total + item.max);
+        data.values.forEach( (item, index) => {
+            colors[item] = color(item.name)
             // normalize values into percents
-            let percent = parseFloat((data["values"][index] / total * 100).toFixed(2))
+            let percent = parseFloat((item.max / total * 100).toFixed(2))
             formatted.push({
-                name: item,
+                name: item.name,
                 y: percent,
                 color: colors[item]
             })

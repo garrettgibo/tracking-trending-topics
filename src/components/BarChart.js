@@ -28,11 +28,11 @@ export class BarChart extends Component {
             groups: [],
             values: [],
         };
-        data["queries"].forEach( (item, index) => {
-            formatted.groups.push(item);
-            colors[item] = color(item)
+        data.values.forEach( (item, index) => {
+            formatted.groups.push(item.name);
+            colors[item] = color(item.name)
             formatted.values.push({
-                y: data["values"][index],
+                y: item.max,
                 color: colors[item],
             })
         });
