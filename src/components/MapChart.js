@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
+// Colors
 import chroma from 'chroma-js';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
+// Maps
 import Highcharts from 'highcharts/highmaps';
-import $ from'jquery';
-// import Exporting from 'highcharts/modules/exporting';
-// import Data from 'highcharts/modules/data';
 import './highchart/us-map.js'
 import ChartTitle from './ChartTitle';
+// Style
 import '../App.css';
-// Exporting(Highcharts);
 
 const color = scaleOrdinal(schemeCategory10);
 let colors = {};
@@ -36,16 +35,13 @@ export class MapChart extends Component {
                 let maxTrendInd = p.maxValueIndex;
                 let trend = data.queries[maxTrendInd]
 
-                // define colors
-                // colors[trend] = color(trend)
                 let f = chroma.scale(['white', colors[trend]]);
 
                 // define actual entry
                 let state = {
                     name: p.geoName,
                     code: p.geoCode.slice(3,), // get only state initials
-                    value: maxTrendInd, //p.value[0],
-                    // color: f(p.value[0] / 100).hex(),
+                    value: maxTrendInd,
                 };
                 // let state = [p.geoCode, ...p.value]
                 return state
@@ -94,7 +90,6 @@ export class MapChart extends Component {
                 data: m.values,
                 joinBy: ['name', 'name'],
                 borderColor: 'white',
-                // keys:['id', 'trend1', 'trend2', 'trend3', 'trend4', 'trend5']
             }]
         });
     }

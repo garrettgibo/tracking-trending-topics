@@ -9,35 +9,28 @@ import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import LineChart from './components/LineChart';
 import MapChart from './components/MapChart';
+import MapChartTrend from './components/MapChartTrend';
 // Data
 import { yearData } from './data/yearData';
-// import { lineData } from './data/lineChartData';
-// import { mapData } from './data/mapChartData';
+import { mapData } from './data/mapData';
+import { mapDataTrend } from './data/mapDataSingle';
 
 const years = Object.keys(yearData)
-// const lineDates = Object.keys(lineData)
-let year = 0
+let year = 4;
 const yearsData = yearData[years[year]]
-// const singleDayLineData = lineData[lineDates[day]]
-// const singleDayTrendMapData = mapData[barDates[day]][singleDayBarData.queries[day]].values.data[0]
+const mapsData = mapData[years[year]]
+const mapsDataTrend = mapDataTrend[years[year]]
 
-// let trend = singleDayBarData.queries[day]
-
-// console.log(singleDayBarData)
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // width: 1152 - 24,
-      // halfWidth: 1152 / 2 - 24,
-      // height: 392,
       barData: yearsData,
       pieData: yearsData,
       lineData: yearsData,
-      // mapData: singleDayTrendMapData,
-      // mapTrend: trend,
-      // trends: singleDayBarData.queries
+      mapData: mapsData,
+      mapDataTrend: mapsDataTrend,
     }
   }
   componentDidMount() {
@@ -63,15 +56,20 @@ class App extends Component {
 
         <div className='content-wrap'>
           <div className='widget-container-wrapper layout-wrap layout-row'>
+            <LineChart data={this.state.lineData} />
             <BarChart data={this.state.barData} />
             <PieChart data={this.state.pieData} />
-            <LineChart data={this.state.lineData} />
+            <MapChart data={this.state.mapData} />
+            <MapChartTrend data={this.state.mapDataTrend} trendIndex={0}/>
+            <MapChartTrend data={this.state.mapDataTrend} trendIndex={1}/>
+            <MapChartTrend data={this.state.mapDataTrend} trendIndex={2}/>
+            <MapChartTrend data={this.state.mapDataTrend} trendIndex={3}/>
+            <MapChartTrend data={this.state.mapDataTrend} trendIndex={4}/>
           </div>
         </div>
       </div>
     )
   }
 }
-            // <MapChart data={this.state.mapData} trend={this.state.trend}/>
 
 export default App;

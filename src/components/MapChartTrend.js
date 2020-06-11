@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
+// Colors
 import chroma from 'chroma-js';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
+// Maps
 import Highcharts from 'highcharts/highmaps';
-import $ from'jquery';
-// import Exporting from 'highcharts/modules/exporting';
-// import Data from 'highcharts/modules/data';
-import './highchart/us-map.js'
 import ChartTitle from './ChartTitle';
+// Style
 import '../App.css';
-// Exporting(Highcharts);
 
 const color = scaleOrdinal(schemeCategory10);
 let colors = {};
@@ -32,20 +30,17 @@ export class MapChart extends Component {
                 colors[query] = color(query);
                 return query
             }),
-            values: data.values.map( p => {
+            values: data.values[trendIndex].map( p => {
                 let maxTrendInd = p.maxValueIndex;
                 let trend = data.queries[maxTrendInd]
 
-                // define colors
-                // colors[trend] = color(trend)
                 let f = chroma.scale(['white', colors[trend]]);
 
                 // define actual entry
                 let state = {
                     name: p.geoName,
                     code: p.geoCode.slice(3,), // get only state initials
-                    value: p.value[trendIndex],
-                    // color: f(p.value[0] / 100).hex(),
+                    value: p.value[0],
                 };
                 // let state = [p.geoCode, ...p.value]
                 return state
@@ -58,7 +53,7 @@ export class MapChart extends Component {
     createMapChart = () => {
         const { data, trendIndex} = this.props;
         const m = this.formatData(data, trendIndex);
-        // console.log(trendIndex, m)
+
         Highcharts.mapChart(this.refs.chart, {
             colorAxis: {
                 from: 0,
