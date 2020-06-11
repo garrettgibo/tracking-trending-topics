@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/tracking-trending-topics/static/css/main.45a0a16f.chunk.css",
+    "main.js": "/tracking-trending-topics/static/js/main.c51358d9.chunk.js",
+    "main.js.map": "/tracking-trending-topics/static/js/main.c51358d9.chunk.js.map",
+    "runtime-main.js": "/tracking-trending-topics/static/js/runtime-main.bdf021be.js",
+    "runtime-main.js.map": "/tracking-trending-topics/static/js/runtime-main.bdf021be.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/tracking-trending-topics/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.6b11517b.chunk.js": "/tracking-trending-topics/static/js/2.6b11517b.chunk.js",
+    "static/js/2.6b11517b.chunk.js.map": "/tracking-trending-topics/static/js/2.6b11517b.chunk.js.map",
+    "index.html": "/tracking-trending-topics/index.html",
+    "precache-manifest.ebebf7e58a43928aa1b15c3dceda746c.js": "/tracking-trending-topics/precache-manifest.ebebf7e58a43928aa1b15c3dceda746c.js",
+    "service-worker.js": "/tracking-trending-topics/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/tracking-trending-topics/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.45a0a16f.chunk.css.map": "/tracking-trending-topics/static/css/main.45a0a16f.chunk.css.map",
+    "static/js/2.6b11517b.chunk.js.LICENSE.txt": "/tracking-trending-topics/static/js/2.6b11517b.chunk.js.LICENSE.txt",
+    "static/media/Octocat.png": "/tracking-trending-topics/static/media/Octocat.ef468e27.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bdf021be.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.6b11517b.chunk.js",
+    "static/css/main.45a0a16f.chunk.css",
+    "static/js/main.c51358d9.chunk.js"
+  ]
+}

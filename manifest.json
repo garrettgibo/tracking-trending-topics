@@ -1,0 +1,10 @@
+{
+  "short_name": "T3",
+  "name": "Tracking Trending Topics",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
