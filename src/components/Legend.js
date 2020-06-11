@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navbar, NavDropdown} from 'react-bootstrap'
+import { Navbar, Dropdown, DropdownButton} from 'react-bootstrap'
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 import '../App.css';
@@ -8,9 +8,39 @@ const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class Legend extends Component {
-    render() {
-        const { years, trends} = this.props;
-        let legend = trends.map(element => {
+    constructor(props) {
+        super(props);
+        this.state = {
+            years: this.props.years,
+            currentYear: null,
+            trends: this.props.trends,
+        }
+    }
+    // initial creation
+    componentDidMount() {
+        this.createLegend()
+    }
+
+    // chart updates
+    componentDidUpdate() {
+        this.createLegend()
+    }
+
+    btnClick = (year) => {
+        this.setState({currentYear: year})
+        console.log(this.state)
+    }
+
+    changeTrends = (trends) => {
+        this.setState({
+            // years: this.props.year,
+            // currentYear: null,
+            trends: trends,
+        })
+    }
+
+    createLegend = () => {
+        let legend = this.state.trends.map(element => {
             return (
                 <div className='legend-element flex-12'>
                     <svg width="40" height="40" style={{margin: 'auto'}}>
@@ -25,18 +55,32 @@ export class Legend extends Component {
                 <div className="header flex-100">
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <NavDropdown title="Year" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">{years[0]}</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.1">{years[1]}</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.1">{years[2]}</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.1">{years[3]}</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.1">{years[4]}</NavDropdown.Item>
-                        </NavDropdown>
+                        <DropdownButton title="Year" id="basic-nav-dropdown">
+                            <Dropdown.Item as="button"
+                                onClick={() => this.props.view(this.state.years[0]) }>
+                                {this.state.years[0]}</Dropdown.Item>
+                            <Dropdown.Item as="button"
+                                onClick={() => this.props.view(this.state.years[1]) }>
+                                {this.state.years[1]}</Dropdown.Item>
+                            <Dropdown.Item as="button"
+                                onClick={() => this.props.view(this.state.years[2]) }>
+                                {this.state.years[2]}</Dropdown.Item>
+                            <Dropdown.Item as="button"
+                                onClick={() => this.props.view(this.state.years[3]) }>
+                                {this.state.years[3]}</Dropdown.Item>
+                            <Dropdown.Item as="button"
+                                onClick={() => this.props.view(this.state.years[4]) }>
+                                {this.state.years[4]}</Dropdown.Item>
+                        </DropdownButton>
                     </Navbar.Collapse>
                     {legend}
                 </div>
             </Navbar>
         )
+    }
+
+    render() {
+        return this.createLegend()
     }
 }
 

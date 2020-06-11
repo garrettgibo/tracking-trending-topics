@@ -13,6 +13,14 @@ const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class MapChart extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: this.props.data,
+            trendIndex: this.props.trendIndex,
+            year: this.props.year,
+        }
+    }
 
     componentDidMount() {
         this.createMapChart()
@@ -21,6 +29,14 @@ export class MapChart extends Component {
     // chart updates
     componentDidUpdate() {
         this.createMapChart()
+    }
+
+    changeYear = (year) => {
+        this.setState({
+            // data: this.props.data,
+            // trendIndex: this.props.trendIndex,
+            year,
+        })
     }
 
     formatData(data, trendIndex) {
@@ -51,8 +67,8 @@ export class MapChart extends Component {
     }
 
     createMapChart = () => {
-        const { data, trendIndex} = this.props;
-        const m = this.formatData(data, trendIndex);
+        // const { data, trendIndex} = this.props;
+        const m = this.formatData(this.state.data[this.state.year], this.state.trendIndex);
 
         Highcharts.mapChart(this.refs.chart, {
             title: {text: null},
@@ -63,7 +79,7 @@ export class MapChart extends Component {
                 to: 100,
                 type: 'logarithmic',
                 minColor: '#f7f7f7',
-                maxColor: colors[m.queries[trendIndex]],
+                maxColor: colors[m.queries[this.state.trendIndex]],
             },
             series: [{
                 mapData: Highcharts.maps['countries/us/us-all'],

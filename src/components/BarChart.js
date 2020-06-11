@@ -9,9 +9,13 @@ const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class BarChart extends Component {
-    // constructor(props) {
-    //     super(props)
-    // }
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: this.props.data,
+            year: this.props.year,
+        }
+    }
 
     // initial creation
     componentDidMount() {
@@ -23,7 +27,15 @@ export class BarChart extends Component {
         this.createBarChart()
     }
 
+    changeYear = (year) => {
+        this.setState({
+            data: this.state.data,
+            year,
+        })
+    }
+
     formatData(data) {
+        console.log(data);
         let formatted = {
             groups: [],
             values: [],
@@ -40,8 +52,8 @@ export class BarChart extends Component {
     }
 
     createBarChart = () => {
-        const { data } = this.props
-        const barData = this.formatData(data);
+        console.log(this.state.year)
+        const barData = this.formatData(this.state.data[this.state.year]);
 
         Highcharts.chart(this.refs.chart, {
             chart: {

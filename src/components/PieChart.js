@@ -9,6 +9,13 @@ const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class LineChart extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: this.props.data,
+            year: this.props.year,
+        }
+    }
     // initial creation
     componentDidMount() {
         this.createPieChart()
@@ -17,6 +24,13 @@ export class LineChart extends Component {
     // chart updates
     componentDidUpdate() {
         this.createPieChart()
+    }
+
+    changeYear = (year) => {
+        this.setState({
+            data: this.state.data,
+            year,
+        })
     }
 
     formatData(data) {
@@ -42,8 +56,8 @@ export class LineChart extends Component {
     }
 
     createPieChart = () => {
-        const {data} = this.props
-        const dataPie = this.formatData(data);
+        // const { data, year} = this.props
+        const dataPie = this.formatData(this.state.data[this.state.year]);
 
         // Create the chart
         Highcharts.chart(this.refs.chart, {
@@ -55,7 +69,6 @@ export class LineChart extends Component {
                 pie: {
                     shadow: false,
                     center: ['50%', '50%'],
-                    // allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: false,

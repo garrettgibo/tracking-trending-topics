@@ -9,8 +9,15 @@ const color = scaleOrdinal(schemeCategory10);
 let colors = {};
 
 export class LineChart extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            data: this.props.data,
+            year: this.props.year,
+        }
+    }
 
-// initial creation
+    // initial creation
     componentDidMount() {
         this.createLineChart()
     }
@@ -18,6 +25,13 @@ export class LineChart extends Component {
     // chart updates
     componentDidUpdate() {
         this.createLineChart()
+    }
+
+    changeYear = (year) => {
+        this.setState({
+            data: this.state.data,
+            year,
+        })
     }
 
     formatData(data) {
@@ -42,8 +56,7 @@ export class LineChart extends Component {
     }
 
     createLineChart = () => {
-        const {data} = this.props
-        const dataLine = this.formatData(data);
+        const dataLine = this.formatData(this.state.data[this.state.year]);
 
         Highcharts.chart(this.refs.chart, {
             chart: {
