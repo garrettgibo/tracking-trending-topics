@@ -6,7 +6,7 @@ to get a better understanding of what is truly *trending*
 ## Website
 
 This is meant to be explored and analyzed to get your own interpretation of the
-data at its webstie:[https://garrettgibo.github.io/tracking-trending-trends/](https://garrettgibo.github.io/tracking-trending-trends)
+data at its webstie:[https://garrettgibo.github.io/tracking-trending-topics/](https://garrettgibo.github.io/tracking-trending-topics/)
 
 ## The DATA
 
