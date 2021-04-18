@@ -1,4 +1,4 @@
-# Tracking Trending Topics
+# T3 - Tracking Trending Topics
 
 A subtle expansion up Google [Trends](https://trends.google.com/trends/?geo=US)
 to get a better understanding of what is truly *trending*
